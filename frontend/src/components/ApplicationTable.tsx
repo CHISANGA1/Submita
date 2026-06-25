@@ -6,7 +6,7 @@ import { StatusBadge } from './StatusBadge'
 
 const amountFormatter = new Intl.NumberFormat(undefined, {
   style: 'currency',
-  currency: 'USD',
+  currency: 'ZMW',
 })
 
 export function ApplicationTable({

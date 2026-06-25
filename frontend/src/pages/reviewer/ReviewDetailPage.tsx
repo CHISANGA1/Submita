@@ -76,9 +76,9 @@ export function ReviewDetailPage() {
                   app.amount == null
                     ? 'Not specified'
                     : new Intl.NumberFormat(undefined, {
-                        style: 'currency',
-                        currency: 'USD',
-                      }).format(app.amount)
+                      style: 'currency',
+                      currency: 'ZMW',
+                    }).format(app.amount)
                 }
               />
               <Field label="Submitted by" value={applicantName} />

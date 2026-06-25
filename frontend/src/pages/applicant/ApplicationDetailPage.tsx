@@ -134,7 +134,7 @@ export function ApplicationDetailPage() {
                         ? 'Not specified'
                         : new Intl.NumberFormat(undefined, {
                           style: 'currency',
-                          currency: 'USD',
+                          currency: 'ZMW',
                         }).format(app.amount)
                     }
                   />
