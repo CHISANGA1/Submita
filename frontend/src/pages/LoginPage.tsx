@@ -55,15 +55,6 @@ export function LoginPage() {
             {mutation.isPending ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
-        <div className="mt-6 rounded-xl bg-slate-50 p-4 text-xs text-slate-600">
-          <p>
-            <strong>Applicant:</strong> applicant@test.com
-          </p>
-          <p className="mt-1">
-            <strong>Reviewer:</strong> reviewer@test.com
-          </p>
-          <p className="mt-1">Password: password123</p>
-        </div>
       </div>
     </main>
   )
