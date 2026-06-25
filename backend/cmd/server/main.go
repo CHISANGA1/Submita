@@ -21,7 +21,7 @@ func main() {
 	port := env("PORT", "8080")
 	origins := os.Getenv("FRONTEND_ORIGINS")
 	if origins == "" {
-		origins = env("FRONTEND_ORIGIN", "http://localhost:5173")
+		origins = env("https://submita-blush.vercel.app", "http://localhost:5173")
 	}
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer cancel()
