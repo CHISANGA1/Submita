@@ -12,7 +12,7 @@ export function Layout() {
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-ink text-white">
               <Send size={20} />
             </span>
-            SubmitFlow
+            Submita
           </Link>
           <div className="flex items-center gap-4">
             <div className="hidden text-right sm:block">
