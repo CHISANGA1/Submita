@@ -9,7 +9,7 @@ export function Layout() {
       <header className="border-b bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
           <Link to={home} className="flex items-center gap-2 text-lg font-extrabold">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-ink text-white">
+            <span className="grid h-9 w-9 place-items-center rounded-xl text-ink">
               <Send size={20} />
             </span>
             Submita
