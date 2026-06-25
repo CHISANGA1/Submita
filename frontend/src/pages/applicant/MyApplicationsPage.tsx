@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { ChevronLeft, ChevronRight, Plus, RotateCcw, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Plus, RotateCcw, SlidersHorizontal, X } from 'lucide-react'
 import { createApplication, listApplications } from '../../api/applications'
 import { errorMessage } from '../../api/client'
 import { ApplicationForm } from '../../components/ApplicationForm'
@@ -19,6 +19,7 @@ const pageSize = 5
 export function MyApplicationsPage() {
   const [creating, setCreating] = useState(false)
   const [statusFilter, setStatusFilter] = useState<'ALL' | Status>('ALL')
+  const [filtersOpen, setFiltersOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const client = useQueryClient()
   const query = useQuery({ queryKey: ['applications'], queryFn: listApplications })
@@ -42,7 +43,10 @@ export function MyApplicationsPage() {
   function clearFilters() {
     setStatusFilter('ALL')
     setCurrentPage(1)
+    setFiltersOpen(false)
   }
+
+  const activeFilterLabel = filters.find(([value]) => value === statusFilter)?.[1] ?? 'All'
 
   return (
     <>
@@ -95,24 +99,81 @@ export function MyApplicationsPage() {
         </div>
       )}
       {query.data && query.data.length > 0 && (
-        <div className="mb-6 flex gap-3 overflow-x-auto pb-1">
-          {filters.map(([value, label]) => (
+        <>
+          <div className="mb-6 flex items-center justify-between gap-3 sm:hidden">
+            <p className="text-sm font-semibold text-slate-600">Status: {activeFilterLabel}</p>
             <button
-              key={value}
-              className={`whitespace-nowrap rounded-xl border px-6 py-3 text-base font-bold transition ${
-                statusFilter === value
-                  ? 'border-ink bg-ink text-white'
-                  : 'border-slate-200 bg-white text-ink hover:border-slate-400'
-              }`}
-              onClick={() => {
-                setStatusFilter(value)
-                setCurrentPage(1)
-              }}
+              className="grid h-11 w-11 place-items-center rounded-xl border bg-white text-ink shadow-sm transition hover:border-slate-400"
+              onClick={() => setFiltersOpen(true)}
+              aria-label="Open status filters"
             >
-              {label}
+              <SlidersHorizontal size={20} />
             </button>
-          ))}
-        </div>
+          </div>
+          <div className="mb-6 hidden gap-3 sm:flex sm:flex-wrap">
+            {filters.map(([value, label]) => (
+              <button
+                key={value}
+                className={`rounded-xl border px-6 py-3 text-base font-bold transition ${
+                  statusFilter === value
+                    ? 'border-ink bg-ink text-white'
+                    : 'border-slate-200 bg-white text-ink hover:border-slate-400'
+                }`}
+                onClick={() => {
+                  setStatusFilter(value)
+                  setCurrentPage(1)
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          {filtersOpen && (
+            <div className="fixed inset-0 z-50 sm:hidden" role="dialog" aria-modal="true">
+              <button
+                className="absolute inset-0 bg-slate-950/40"
+                onClick={() => setFiltersOpen(false)}
+                aria-label="Close status filters"
+              />
+              <aside className="absolute right-0 top-0 h-full w-72 max-w-[85vw] bg-white p-5 shadow-2xl">
+                <div className="mb-5 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-widest text-accent">
+                      Filter by
+                    </p>
+                    <h2 className="text-xl font-extrabold">Status</h2>
+                  </div>
+                  <button
+                    className="grid h-9 w-9 place-items-center rounded-lg border text-slate-500 transition hover:bg-slate-50 hover:text-ink"
+                    onClick={() => setFiltersOpen(false)}
+                    aria-label="Close status filters"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+                <div className="grid gap-2">
+                  {filters.map(([value, label]) => (
+                    <button
+                      key={value}
+                      className={`rounded-xl border px-4 py-3 text-left text-sm font-bold transition ${
+                        statusFilter === value
+                          ? 'border-ink bg-ink text-white'
+                          : 'border-slate-200 bg-white text-ink hover:border-slate-400'
+                      }`}
+                      onClick={() => {
+                        setStatusFilter(value)
+                        setCurrentPage(1)
+                        setFiltersOpen(false)
+                      }}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </aside>
+            </div>
+          )}
+        </>
       )}
       {query.isLoading && <p>Loading applications…</p>}
       {query.isError && <p className="error">{errorMessage(query.error)}</p>}
