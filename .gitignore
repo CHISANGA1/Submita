@@ -7,3 +7,6 @@ frontend/dist/
 frontend/.vercel/
 frontend/*.tsbuildinfo
 coverage.out
+.vercel/
+.env.local
+frontend/.env.local

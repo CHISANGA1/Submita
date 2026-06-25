@@ -2,6 +2,12 @@
 
 A two-sided request workflow with strict server-side state transitions and an immutable audit trail. Applicants create, edit, and submit requests; reviewers start reviews, approve, reject, or return applications for changes.
 
+## Live submission
+
+- Live app: https://submita-blush.vercel.app
+- API health check: https://backend-production-a97f.up.railway.app/health
+- Git repository: git@github.com:CHISANGA1/Submita.git
+
 ## Test credentials
 
 | Role | Email | Password |
@@ -81,9 +87,9 @@ Migrations and the requested idempotent demo seed run when the API starts. Keep 
 2. Disable Vercel's Git-based automatic deployments so the GitHub workflow is the only deployment path.
 3. Add the production environment variable:
 
-   - `VITE_API_URL=https://YOUR-RAILWAY-DOMAIN/api`
+   - `VITE_API_URL=https://backend-production-a97f.up.railway.app/api`
 
-4. Add the production Vercel URL to Railway's `FRONTEND_ORIGINS`, for example `https://YOUR-PROJECT.vercel.app`. Add custom domains to the same comma-separated value.
+4. Add the production Vercel URL to Railway's `FRONTEND_ORIGINS`: `https://submita-blush.vercel.app`. Add custom domains to the same comma-separated value.
 
 The checked-in `frontend/vercel.json` builds the Vite application and rewrites unknown paths to `index.html`, allowing direct navigation to React Router routes.
 
@@ -102,7 +108,7 @@ The pull-request workflow runs backend tests and frontend lint, type, and build 
 After deployment:
 
 ```bash
-curl --fail https://YOUR-RAILWAY-DOMAIN/health
+curl --fail https://backend-production-a97f.up.railway.app/health
 ```
 
 Open the Vercel application, sign in with both demo roles, and verify applicant submission and reviewer transitions. Refresh a nested route such as `/applications/<id>` to verify the SPA rewrite. Browser requests from origins not listed in `FRONTEND_ORIGINS` will not receive CORS authorization headers.
@@ -112,7 +118,7 @@ Open the Vercel application, sign in with both demo roles, and verify applicant 
 - Railway: open the service deployment history and redeploy the last healthy deployment.
 - Vercel: open the project deployment history and promote the previous production deployment.
 
-Live URLs and provider credentials are intentionally omitted from the repository.
+Provider credentials and secrets are intentionally omitted from the repository.
 
 ## Trade-offs and next steps
 
