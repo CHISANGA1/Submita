@@ -24,15 +24,15 @@ export function LoginPage() {
   }
   return (
     <main className="grid min-h-screen place-items-center bg-ink p-4">
-      <div className="card w-full max-w-md p-8">
+      <div className="rounded-[10px] border-solid border-[1px] border-slate-300 w-full max-w-md p-8">
         <div className="mb-8">
           <h1 className="text-3xl text-accent font-extrabold">Bwanji</h1>
-          <p className="mt-2 text-sm text-slate-500">Sign in to your account.</p>
+          <p className="mt-2 text-sm text-slate-300">Sign in to your account.</p>
         </div>
         {mutation.isError && <p className="error mb-4">{errorMessage(mutation.error)}</p>}
         <form onSubmit={submit} className="space-y-4">
           <div>
-            <label className="label">Email</label>
+            <label className="mt-2 text-sm text-slate-300">Email</label>
             <input
               className="field"
               type="email"
@@ -42,7 +42,7 @@ export function LoginPage() {
             />
           </div>
           <div>
-            <label className="label">Password</label>
+            <label className="mt-2 text-sm text-slate-300">Password</label>
             <input
               className="field"
               type="password"
@@ -51,7 +51,7 @@ export function LoginPage() {
               required
             />
           </div>
-          <button className="btn-accent w-full" disabled={mutation.isPending}>
+          <button className="btn-accent w-full border-slate-300" disabled={mutation.isPending}>
             {mutation.isPending ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
